@@ -1381,6 +1381,7 @@ async function submitFormspree(e, form, okId) {
     if (res.ok) {
       document.getElementById(okId).classList.add('show');
       form.reset();
+      gtag('event', 'generate_lead', { event_category: 'contacto', event_label: form.querySelector('[name="origen"]')?.value || 'formulario' });
     } else {
       alert('Hubo un error al enviar el formulario. Por favor llámenos directamente al +56 9 8922 3239.');
     }
@@ -1390,6 +1391,14 @@ async function submitFormspree(e, form, okId) {
   btn.disabled = false;
   btn.innerHTML = origHTML;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      gtag('event', 'generate_lead', { event_category: 'contacto', event_label: 'llamada_telefonica' });
+    });
+  });
+});
 </script>
 
 <!-- ============ FLOATING WHATSAPP ============ -->
